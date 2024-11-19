@@ -1,4 +1,4 @@
-package br.squad3.CombatAction;
+package br.squad3.CombatAction.interfaces;
 
 import br.squad3.monsters.interfaces.Monster;
 
