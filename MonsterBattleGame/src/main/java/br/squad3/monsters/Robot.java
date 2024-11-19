@@ -2,11 +2,12 @@ package br.squad3.monsters;
 
 import br.squad3.monsters.interfaces.Monster;
 
-public class Robot implements Monster {
-    private int health = 110;
-    private int attackPower = 18;
-    private int defense = 8;
+public class Robot extends Monster {
     private boolean isOverloaded = false;
+
+    public Robot() {
+        super(110, 18);
+    }
 
     @Override
     public void attack(Monster target) {
@@ -19,7 +20,7 @@ public class Robot implements Monster {
     @Override
     public void defend() {
         System.out.println("Robô se defende com armadura reforçada!");
-        defense += 4;
+        setDefenseBoost(getDefenseBoost() + 4);
     }
 
     @Override
@@ -27,14 +28,5 @@ public class Robot implements Monster {
         System.out.println("Robô ativa sua habilidade especial: Sobrecarga!");
         isOverloaded = true;
     }
-
-    @Override
-    public int getHealth() {
-        return health;
-    }
-
-    @Override
-    public void setHealth(int health) {
-        this.health = health;
-    }
 }
+
