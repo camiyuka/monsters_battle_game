@@ -2,6 +2,10 @@ package br.squad3.monsters.interfaces;
 
 import br.squad3.CombatAction.interfaces.CombatAction;
 import br.squad3.memento.MonsterMemento;
+import br.squad3.monsters.Dragon;
+import br.squad3.monsters.Robot;
+import br.squad3.monsters.Zombie;
+import br.squad3.monsters.enums.MonsterType;
 import br.squad3.observer.interfaces.GameObserver;
 import br.squad3.observer.interfaces.GameSubject;
 
@@ -72,15 +76,29 @@ public abstract class Monster implements GameSubject {
             observer.update(message);
         }
     }
-
     public MonsterMemento saveState() {
-        return new MonsterMemento(health, attackPower, defenseBoost);
+        MonsterType type = (this instanceof Dragon) ? MonsterType.DRAGON
+                : (this instanceof Robot) ? MonsterType.ROBOT
+                : MonsterType.ZOMBIE;
+        return new MonsterMemento(type, health, attackPower, defenseBoost);
     }
-
     public void restoreState(MonsterMemento memento) {
         this.health = memento.getHealth();
         this.attackPower = memento.getAttackPower();
         this.defenseBoost = memento.getDefenseBoost();
         notifyObservers(this.getClass().getSimpleName() + " restaurou seu estado.");
     }
+
+    public static Monster restoreMonsterFromMemento(MonsterMemento memento) {
+        Monster monster;
+        switch (memento.getMonsterType()) {
+            case DRAGON -> monster = new Dragon();
+            case ROBOT -> monster = new Robot();
+            case ZOMBIE -> monster = new Zombie();
+            default -> throw new IllegalArgumentException("Tipo de monstro desconhecido: " + memento.getMonsterType());
+        }
+        monster.restoreState(memento);
+        return monster;
+    }
+
 }
