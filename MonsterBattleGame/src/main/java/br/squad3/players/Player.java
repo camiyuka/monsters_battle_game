@@ -15,6 +15,11 @@ public class Player implements GameObserver {
         this.monster = MonsterFactory.createMonster(monsterType);
     }
 
+    public Player(String name, Monster monster) {
+        this.name = name;
+        this.monster = monster;
+    }
+
     @Override
     public void update(String message) {
         System.out.println(name + " recebeu notificação: " + message);
