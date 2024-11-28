@@ -9,7 +9,7 @@ public class GameStateCaretaker {
         gameHistory.push(memento);
     }
 
-    public GameMemento restoreState() {
+    public GameMemento loadState() {
         if (!gameHistory.isEmpty()) {
             return gameHistory.pop();
         }
